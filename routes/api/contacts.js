@@ -1,15 +1,10 @@
 const express = require('express')
 const { NotFound, BadRequest } = require('http-errors')
-const Joi = require('joi')
 const contactsOperations = require('../../model/controllers')
+const { validation } = require('../../middlewares')
+const {joiContactsSchema} = require('../../validations')
 
 const router = express.Router()
-
-const joiSchema = Joi.object({
-  name: Joi.string().min(2).max(50).required(),
-  email: Joi.string().email().required(),
-  phone: Joi.string().required(),
-})
 
 router.get('/', async (_, res, next) => {
   try {
@@ -45,12 +40,8 @@ router.get('/:contactId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validation(joiSchema), async (req, res, next) => {
   try {
-    const { error } = joiSchema.validate(req.body)
-    if (error) {
-      throw new BadRequest(error.message)
-    }
     const { name, email, phone } = req.body
     const result = await contactsOperations.addContact(name, email, phone)
     res.status(201).json({
@@ -82,12 +73,8 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
-router.put('/:contactId', async (req, res, next) => {
+router.put('/:contactId', validation(joiSchema), async (req, res, next) => {
   try {
-    const { error } = joiSchema.validate(req.body)
-    if (error) {
-      throw new BadRequest(error.message)
-    }
     const { contactId } = req.params
     const result = await contactsOperations.updateContactById(contactId, req.body)
     if (!result) {
