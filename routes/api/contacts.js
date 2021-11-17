@@ -1,8 +1,8 @@
 const express = require('express')
-const { NotFound, BadRequest } = require('http-errors')
+const { NotFound } = require('http-errors')
 const contactsOperations = require('../../model/controllers')
 const { validation } = require('../../middlewares')
-const {joiContactsSchema} = require('../../validations')
+const { joiContactsSchema } = require('../../validations')
 
 const router = express.Router()
 
@@ -40,7 +40,7 @@ router.get('/:contactId', async (req, res, next) => {
   }
 })
 
-router.post('/', validation(joiSchema), async (req, res, next) => {
+router.post('/', validation(joiContactsSchema), async (req, res, next) => {
   try {
     const { name, email, phone } = req.body
     const result = await contactsOperations.addContact(name, email, phone)
@@ -73,7 +73,7 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
-router.put('/:contactId', validation(joiSchema), async (req, res, next) => {
+router.put('/:contactId', validation(joiContactsSchema), async (req, res, next) => {
   try {
     const { contactId } = req.params
     const result = await contactsOperations.updateContactById(contactId, req.body)
