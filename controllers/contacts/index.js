@@ -1,13 +1,15 @@
-// const getContactsAll = require('./getContactsAll')
-// const getContactById = require('./getContactById')
+const getContactsAll = require('./getContactsAll')
+const getContactById = require('./getContactById')
 const addContact = require('./addContact')
-// const remmoveContactById = require('./remmoveContactById')
-// const updateContactById = require('./updateContactById')
+const updateContactById = require('./updateContactById')
+const updateStatusContact = require('./updateStatusContact')
+const remmoveContactById = require('./remmoveContactById')
 
 module.exports = {
-  // getContactsAll,
-  // getContactById,
+  getContactsAll,
+  getContactById,
   addContact,
-  // remmoveContactById,
-  // updateContactById,
+  updateContactById,
+  updateStatusContact,
+  remmoveContactById,
 }
