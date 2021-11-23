@@ -6,15 +6,15 @@ const { joiContactsSchema } = require('../../validations')
 
 const router = express.Router()
 
-router.get('/', controllerWrapper(ctrl.getContactsAll))
+router.get('/', authenticat, controllerWrapper(ctrl.getContactsAll))
 
-router.get('/:contactId', controllerWrapper(ctrl.getContactById))
+router.get('/:contactId', authenticat, controllerWrapper(ctrl.getContactById))
 
 router.post('/', authenticat, validation(joiContactsSchema), controllerWrapper(ctrl.addContact))
 
-router.put('/:contactId', validation(joiContactsSchema), controllerWrapper(ctrl.updateContactById))
+router.put('/:contactId', authenticat, validation(joiContactsSchema), controllerWrapper(ctrl.updateContactById))
 
-router.patch('/:contactId/favorite', validation(joiContactsSchema), controllerWrapper(ctrl.updateStatusContact))
+router.patch('/:contactId/favorite', authenticat, validation(joiContactsSchema), controllerWrapper(ctrl.updateStatusContact))
 
 router.delete('/:contactId', controllerWrapper(ctrl.remmoveContactById))
 
