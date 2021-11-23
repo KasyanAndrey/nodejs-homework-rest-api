@@ -1,5 +1,4 @@
 const { Conflict } = require('http-errors')
-
 const { User } = require('../../model')
 
 const signup = async (req, res) => {
